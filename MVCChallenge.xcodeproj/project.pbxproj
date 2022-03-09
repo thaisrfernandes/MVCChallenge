@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		894925E227D91B6B0078F16F /* LoadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894925E127D91B6B0078F16F /* LoadData.swift */; };
 		8951CF9F27D2A1F80073E221 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8951CF9E27D2A1F80073E221 /* AppDelegate.swift */; };
 		8951CFA127D2A1F80073E221 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8951CFA027D2A1F80073E221 /* SceneDelegate.swift */; };
 		8951CFA327D2A1F80073E221 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8951CFA227D2A1F80073E221 /* ViewController.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		894925E127D91B6B0078F16F /* LoadData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadData.swift; sourceTree = "<group>"; };
 		8951CF9B27D2A1F80073E221 /* MVCChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVCChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8951CF9E27D2A1F80073E221 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8951CFA027D2A1F80073E221 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				CC48EE8927D6A1BD00B5354B /* Movie.swift */,
 				8951CFB327D2AB0D0073E221 /* Coordinator.swift */,
 				8951CFB527D2AB560073E221 /* MainCoordinator.swift */,
+				894925E127D91B6B0078F16F /* LoadData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				895DDF8427D7E4F800AE0B06 /* MovieDetailsResponse.swift in Sources */,
 				CC8CBD6127D2AC8600EA537C /* MovieServiceAPIRouter.swift in Sources */,
 				CC48EE8A27D6A1BD00B5354B /* Movie.swift in Sources */,
+				894925E227D91B6B0078F16F /* LoadData.swift in Sources */,
 				8951CFB627D2AB560073E221 /* MainCoordinator.swift in Sources */,
 				8951CFA127D2A1F80073E221 /* SceneDelegate.swift in Sources */,
 				895DDF8127D7C85000AE0B06 /* ViewCode.swift in Sources */,
