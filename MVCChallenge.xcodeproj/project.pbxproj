@@ -26,6 +26,12 @@
 		CC48EE8C27D6A1D800B5354B /* MoviesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC48EE8B27D6A1D800B5354B /* MoviesResponse.swift */; };
 		CC48EE8F27D6A6E700B5354B /* MovieMock.json in Resources */ = {isa = PBXBuildFile; fileRef = CC48EE8727D69FF800B5354B /* MovieMock.json */; };
 		CC48EE9127D6A9F100B5354B /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC48EE9027D6A9F100B5354B /* ParserTests.swift */; };
+		CC48EE9427D7FCCC00B5354B /* MovieServiceRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC48EE6627D6892F00B5354B /* MovieServiceRequester.swift */; };
+		CC48EE9527D7FCCF00B5354B /* MovieServiceAPIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8CBD6027D2AC8600EA537C /* MovieServiceAPIRouter.swift */; };
+		CC48EE9627D7FCD200B5354B /* MoviesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC48EE8B27D6A1D800B5354B /* MoviesResponse.swift */; };
+		CC48EE9727D7FCD600B5354B /* MovieServiceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC48EE6827D68B4400B5354B /* MovieServiceParser.swift */; };
+		CC48EE9827D7FCDA00B5354B /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC48EE8127D69C0400B5354B /* NetworkError.swift */; };
+		CC48EE9927D7FCEE00B5354B /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC48EE8927D6A1BD00B5354B /* Movie.swift */; };
 		CC8CBD6127D2AC8600EA537C /* MovieServiceAPIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8CBD6027D2AC8600EA537C /* MovieServiceAPIRouter.swift */; };
 /* End PBXBuildFile section */
 
@@ -293,6 +299,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC48EE7F27D6993C00B5354B /* RequesterTests.swift in Sources */,
+				CC48EE9827D7FCDA00B5354B /* NetworkError.swift in Sources */,
+				CC48EE9427D7FCCC00B5354B /* MovieServiceRequester.swift in Sources */,
+				CC48EE9627D7FCD200B5354B /* MoviesResponse.swift in Sources */,
+				CC48EE9727D7FCD600B5354B /* MovieServiceParser.swift in Sources */,
+				CC48EE9527D7FCCF00B5354B /* MovieServiceAPIRouter.swift in Sources */,
+				CC48EE9927D7FCEE00B5354B /* Movie.swift in Sources */,
 				CC48EE9127D6A9F100B5354B /* ParserTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
