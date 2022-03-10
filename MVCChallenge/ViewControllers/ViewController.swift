@@ -16,6 +16,7 @@ class ViewController: UIViewController {
 
     private lazy var navButton = { return UIButton(frame: .zero) }()
     private lazy var apiButton = { return UIButton(frame: .zero) }()
+    private lazy var searchBarController = { return UISearchController() }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,16 +72,16 @@ extension ViewController: ViewCodeConfiguration {
     func setupConstraints() {}
     
     func configureViews() {
-        navButton.frame = CGRect(x: 100, y: 100, width: 100, height: 50)
-        navButton.backgroundColor = .red
-        navButton.setTitle("Test Button", for: .normal)
-        navButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        self.title = "Movies"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.searchController = searchBarController
+
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor(named: "Secondary")
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
         
-        apiButton.frame = CGRect(x: 100, y: 500, width: 100, height: 50)
-        apiButton.backgroundColor = .blue
-        apiButton.setTitle("API Button", for: .normal)
-        apiButton.addTarget(self, action: #selector(apiButtonAction), for: .touchUpInside)
-        
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
     }
 }
