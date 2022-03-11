@@ -20,23 +20,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadMovies()
-        //applyViewCode()
-    }
-    
-    @objc func buttonAction(sender: UIButton!) {
-        coordinator?.viewMovieDetails()
-    }
-    
-    @objc func apiButtonAction(sender: UIButton!) {
-        let movie = nowPlayingMovies[0]
-        
-        requester.request(apiRouter: MovieServiceAPIRouter.getDetails(movieId: movie.id)) { (result: Result<MovieDetailsResponse, NetworkError>) in
-            
-            switch result {
-                case .success(let response): print("\(response.original_title) - \(response.genres) - \(response.overview) - \(response.popularity)")
-                case .failure(let error): print(error)
-            }
-        }
+        applyViewCode()
     }
 }
 
@@ -50,8 +34,6 @@ extension ViewController: LoadDataProtocol {
                 case .failure(let error): print(error)
             }
         }
-        
-        print(nowPlayingMovies)
     }
     
     func loadPopularMovies() {
@@ -71,13 +53,17 @@ extension ViewController: ViewCodeConfiguration {
     }
     
     func setupConstraints() {
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
     }
     
     func configureViews() {
+        view.backgroundColor = .systemBackground
+        
         self.title = "Movies"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.searchController = searchBarController
@@ -89,44 +75,72 @@ extension ViewController: ViewCodeConfiguration {
         navigationItem.compactAppearance = appearance
         
         tableView.register(SectionHeader.self,
-               forHeaderFooterViewReuseIdentifier: "sectionHeader")
+                           forHeaderFooterViewReuseIdentifier: "sectionHeader")
         tableView.register(MovieListCell.self, forCellReuseIdentifier: "cell")
-
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
-        view.backgroundColor = .systemBackground
+        tableView.separatorStyle = .none
     }
 }
 
 extension ViewController: UITableViewDataSource {
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 2
-  }
+    enum MovieSections: Int {
+        case nowPlaying = 1
+        case popular = 2
+    }
     
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MovieListCell
-
-      cell.title.text = "Spider-Man: No Way Home"
-      cell.overview.text = "Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man."
-      cell.rate.text = "8.3"
-      
-    return cell
-  }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if section == MovieSections.nowPlaying.rawValue {
+            return nowPlayingMovies.count
+        }
+        
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MovieListCell
+        
+        if let path = popularMovies[indexPath.row].poster_path, let url = MovieServiceAPIRouter.getImage(poster_path: path).pathURL {
+            cell.poster.load(url: url)
+        }
+        
+        cell.title.text = popularMovies[indexPath.row].title
+        cell.overview.text = popularMovies[indexPath.row].overview
+        cell.rate.text = String(popularMovies[indexPath.row].vote_average)
+        
+        return cell
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        return 138
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
 }
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier:
-                    "sectionHeader") as! SectionHeader
-        view.title.text = "Popular Movies"
-
+                                                                "sectionHeader") as! SectionHeader
+        
+        view.title.text = (section == MovieSections.nowPlaying.rawValue) ? "Now Playing" : "Popular Movies"
+        
         return view
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let movieList = indexPath.section == MovieSections.nowPlaying.rawValue ? nowPlayingMovies : popularMovies
+        
+        let selectedMovie = movieList[indexPath.row]
+        
+        print(selectedMovie)
+    }
+    
 }
 

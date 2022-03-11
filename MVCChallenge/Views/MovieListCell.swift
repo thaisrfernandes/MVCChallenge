@@ -9,10 +9,13 @@ import Foundation
 import UIKit
 
 class MovieListCell: UITableViewCell {
+    var rateStackView = UIStackView()
+    var stackView = UIStackView()
     var poster = UIImageView()
     var title = UILabel()
     var overview = UILabel()
     var rate = UILabel()
+    var rateImage = UIImageView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -26,10 +29,13 @@ class MovieListCell: UITableViewCell {
 
 extension MovieListCell: ViewCodeConfiguration {
     func buildHierarchy() {
-        contentView.addSubview(title)
-        contentView.addSubview(overview)
-        contentView.addSubview(rate)
+        rateStackView.addArrangedSubview(rateImage)
+        rateStackView.addArrangedSubview(rate)
+        stackView.addArrangedSubview(title)
+        stackView.addArrangedSubview(overview)
+        stackView.addArrangedSubview(rateStackView)
         contentView.addSubview(poster)
+        contentView.addSubview(stackView)
     }
     
     func setupConstraints() {
@@ -37,18 +43,14 @@ extension MovieListCell: ViewCodeConfiguration {
             poster.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             poster.widthAnchor.constraint(equalToConstant: 79),
             poster.heightAnchor.constraint(equalToConstant: 118),
+            poster.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            title.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 10),
-            title.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            stackView.leadingAnchor.constraint(equalTo: poster.trailingAnchor, constant: 10),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            stackView.centerYAnchor.constraint(equalTo: poster.centerYAnchor),
             
-            overview.topAnchor.constraint(equalTo: title.bottomAnchor),
-            overview.leadingAnchor.constraint(equalTo: title.leadingAnchor),
-            overview.trailingAnchor.constraint(equalTo: title.trailingAnchor),
-            
-            rate.bottomAnchor.constraint(equalTo: poster.bottomAnchor, constant: -5),
-            rate.leadingAnchor.constraint(equalTo: title.leadingAnchor),
-            rate.trailingAnchor.constraint(equalTo: title.trailingAnchor),
-            
+            rateImage.widthAnchor.constraint(equalToConstant: 14),
+            rateImage.heightAnchor.constraint(equalToConstant: 12)
         ])
     }
     
@@ -57,13 +59,34 @@ extension MovieListCell: ViewCodeConfiguration {
         title.translatesAutoresizingMaskIntoConstraints = false
         overview.translatesAutoresizingMaskIntoConstraints = false
         rate.translatesAutoresizingMaskIntoConstraints = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        rateStackView.translatesAutoresizingMaskIntoConstraints = false
+        rateImage.translatesAutoresizingMaskIntoConstraints = false
+        
+        poster.layer.cornerRadius = 10
+        poster.clipsToBounds = true
+        
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.distribution = .fill
+        stackView.spacing = 16
+        
+        title.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
 
-        poster.image = UIImage(named: "image")
-        
-        title.backgroundColor = .darkGray
+        overview.font = UIFont.systemFont(ofSize: 13)
+        overview.textColor = UIColor(named: "Primary")
         overview.numberOfLines = 3
-        overview.backgroundColor = .systemPink
+
+        rate.font = UIFont.systemFont(ofSize: 12)
+        rate.textColor = UIColor.systemGray
         
+        rateImage.image = UIImage(systemName: "star")
+        rateImage.tintColor = UIColor.systemGray
+        
+        rateStackView.axis = .horizontal
+        rateStackView.alignment = .center
+        rateStackView.distribution = .fill
+        rateStackView.spacing = 5
     }
     
     
