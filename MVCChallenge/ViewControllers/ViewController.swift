@@ -30,8 +30,13 @@ extension ViewController: LoadDataProtocol {
         requester.request(apiRouter: MovieServiceAPIRouter.getNowPlaying(page: 1)) { (result: Result<MoviesResponse, NetworkError>) in
             
             switch result {
-                case .success(let response): self.nowPlayingMovies = response.results
-                case .failure(let error): print(error)
+            case .success(let response):
+                DispatchQueue.main.async {
+                    self.nowPlayingMovies = response.results
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
             }
         }
     }
@@ -40,8 +45,13 @@ extension ViewController: LoadDataProtocol {
         requester.request(apiRouter: MovieServiceAPIRouter.getPopular(page: 1)) { (result: Result<MoviesResponse, NetworkError>) in
             
             switch result {
-                case .success(let response): self.popularMovies = response.results
-                case .failure(let error): print(error)
+            case .success(let response):
+                DispatchQueue.main.async {
+                    self.popularMovies = response.results
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
             }
         }
     }
@@ -95,21 +105,29 @@ extension ViewController: UITableViewDataSource {
         
         if section == MovieSections.nowPlaying.rawValue {
             return nowPlayingMovies.count
+        } else {
+            return popularMovies.count
         }
-        
-        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MovieListCell
-        
-        if let path = popularMovies[indexPath.row].poster_path, let url = MovieServiceAPIRouter.getImage(poster_path: path).pathURL {
+//        if let posterPath = movie?.poster_path, let url = MovieServiceAPIRouter.getImage(poster_path: posterPath).pathURL {
+//            movieImageView.load(url: url)
+//        }
+        var movie: Movie
+        if indexPath.section == MovieSections.nowPlaying.rawValue {
+            movie = nowPlayingMovies[indexPath.row]
+        } else {
+            movie = popularMovies[indexPath.row]
+        }
+        if let path = movie.poster_path, let url = MovieServiceAPIRouter.getImage(poster_path: path).pathURL {
             cell.poster.load(url: url)
         }
         
-        cell.title.text = popularMovies[indexPath.row].title
-        cell.overview.text = popularMovies[indexPath.row].overview
-        cell.rate.text = String(popularMovies[indexPath.row].vote_average)
+        cell.title.text = movie.title
+        cell.overview.text = movie.overview
+        cell.rate.text = String(movie.vote_average)
         
         return cell
     }
