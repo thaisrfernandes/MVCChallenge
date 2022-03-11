@@ -139,7 +139,7 @@ extension ViewController: UITableViewDelegate {
         
         let selectedMovie = movieList[indexPath.row]
         
-        print(selectedMovie)
+        coordinator?.viewMovieDetails(movie: selectedMovie)
     }
     
 }
