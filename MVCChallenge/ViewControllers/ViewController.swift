@@ -24,10 +24,6 @@ class ViewController: UIViewController {
         applyViewCode()
     }
     
-    @objc func buttonAction(sender: UIButton!) {
-        coordinator?.viewMovieDetails()
-    }
-    
     @objc func apiButtonAction(sender: UIButton!) {
         let movie = nowPlayingMovies[0]
         
